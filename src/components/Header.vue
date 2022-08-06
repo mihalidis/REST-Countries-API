@@ -1,6 +1,4 @@
-<script setup>
-
-</script>
+<script setup></script>
 
 <template>
     <div class="navbar navbar-expand-lg">
@@ -15,8 +13,5 @@
     .navbar-brand{
         color: var(--ln-white);
     }
-}
-@media (min-width: 1024px) {
-
 }
 </style>

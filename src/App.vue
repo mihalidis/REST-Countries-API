@@ -13,8 +13,4 @@ import Home from './components/Home.vue';
   </main>
 </template>
 
-<style scoped>
-@media (min-width: 1024px) {
-
-}
-</style>
+<style scoped></style>

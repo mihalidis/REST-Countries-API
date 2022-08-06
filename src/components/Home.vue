@@ -1,32 +1,27 @@
+<template>
+  <div class="home-wrapper">
+    <Countries :all-countries="getCountries" />
+  </div>
+</template>
+
 <script setup>
-import CountryCard from './CountryCard.vue';
-import axios from 'axios';
-import { ref, onMounted } from 'vue';
+import Countries from './Countries.vue';
+import { onMounted, computed } from 'vue';
+import { useCountriesStore } from '../stores/countries';
 
-const countries = ref([]);
+const store = useCountriesStore();
 
-const getAllCountries = async () => {
-  try {
-    const response = await axios.get(`https://restcountries.com/v3.1/all`);
-    countries.value = response.data;
-  } catch (errors) {
-    console.error(errors);
-  }
-};
+const getCountries = computed(() => {
+  return store.getCountries
+})
 
 onMounted(() => {
-  getAllCountries();
+  store.getAllCountries();
 });
 </script>
 
-<template>
-<div>
-  <CountryCard />
-</div>
-</template>
-
-<style scoped>
-@media (min-width: 1024px) {
-
+<style lang="scss" scoped>
+.home-wrapper {
+  display: flex;
 }
 </style>
