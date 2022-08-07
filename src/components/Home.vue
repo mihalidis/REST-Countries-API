@@ -16,7 +16,7 @@ const getCountries = computed(() => {
 })
 
 onMounted(() => {
-  store.getAllCountries();
+  store.fetchAllCountries();
 });
 </script>
 
