@@ -22,7 +22,7 @@ defineProps({
 .countries-grid {
     display: grid;
     margin: 60px auto;
-    grid-template-columns: 265px 265px 265px;
+    grid-template-columns: 265px 265px 265px 265px;
     grid-template-rows: 300px auto 300px;
     column-gap: 60px;
     row-gap: 60px;

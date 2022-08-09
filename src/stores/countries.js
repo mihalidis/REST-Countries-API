@@ -18,6 +18,14 @@ export const useCountriesStore = defineStore("user",{
               } catch (errors) {
                 console.error(errors);
               }
+        },
+        async fetchCountiesByRegion(region) {
+            try {
+                const response = await axios.get(`https://restcountries.com/v3.1/region/${region}`);
+                this.countries = response.data;
+              } catch (errors) {
+                console.error(errors);
+              }
         }
     },
 })
