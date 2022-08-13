@@ -22,21 +22,26 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, inject } from 'vue';
 import { useCountriesStore } from '../stores/countries';
 
 const store = useCountriesStore();
+const emitter = inject('emitter');
 
 const regionSelection = ref(["All", "Africa", "America", "Asia", "Europe", "Oceania"]);
 const selectedRegion = ref("Filter by Region");
 
-function selectRegion(selected) {
+async function selectRegion(selected) {
     if (selected === "All") {
         selectedRegion.value = "Filter by Region";
-        store.fetchAllCountries();
+        emitter.emit('isLoading', ref(true));
+        await store.fetchAllCountries();
+        emitter.emit('isLoading', ref(false));
     } else {
         selectedRegion.value = selected;
-        store.fetchCountiesByRegion(selected);
+        emitter.emit('isLoading', ref(true));
+        await store.fetchCountiesByRegion(selected);
+        emitter.emit('isLoading', ref(false));
     }
 }
 </script>
