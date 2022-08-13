@@ -2,6 +2,8 @@
 
 This is the [REST Countries API with color theme switcher](https://www.frontendmentor.io/challenges/rest-countries-api-with-color-theme-switcher-5cacc469fec04111f7b848ca/hub/rest-countries-api-with-color-theme-switcher-fbka45K6cK) challange from [frontendmentor](https://www.frontendmentor.io/)
 
+**Live:** https://rest-countries-api-eosin-one.vercel.app/#
+
 ## What are we going to do in this challenge?
 - See all countries from the [API](https://restcountries.com/) on the homepage
 - Search for a country using an `input` field
