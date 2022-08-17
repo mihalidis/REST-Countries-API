@@ -1,30 +1,109 @@
 <template>
-    <div class="countries-grid">
-        <CountryCard v-for="country in allCountries"
+  <div class="countries">
+    <div class="countries-header">
+      <div class="search-group">
+        <span class="fa fa-search form-control-feedback"></span>
+        <input  v-model="searchInput"
+                type="search"
+                class="form-control"
+                placeholder="Search"
+                @keyup="search">
+      </div>
+      <SelectRegionDropdown />
+    </div>
+    <Spinner v-if="isLoading" />
+    <div v-else class="countries-grid">
+        <CountryCard v-for="country in countries"
                     :key="country.name.common"
                     :country="country" />
     </div>
+  </div>
 </template>
 
 <script setup>
+import { ref, watch, computed, inject, onMounted } from 'vue';
 import CountryCard from './CountryCard.vue';
+import SelectRegionDropdown from './SelectRegionDropdown.vue';
+import Spinner from './Spinner.vue';
 
-defineProps({
+const emitter = inject('emitter');
+
+const props = defineProps({
   allCountries: {
     type: Array,
     default(){ return [] }
   }
-})
+});
 
+const isLoading = ref(false);
+const searchInput = ref('');
+const searchQuery = ref('');
+
+const countries = computed(() => {
+  const filteredCountries = props.allCountries.filter(country => (country.name.common).toLowerCase().includes(searchQuery.value.toLowerCase()));
+
+  return filteredCountries;
+});
+
+onMounted(() => {
+  emitter.on('isLoading', (payload) => {
+    isLoading.value = payload.value;
+  });
+  // search field close button action
+  const input = document.querySelector('input[type="search"]');
+
+  input.addEventListener('search', () => {
+    searchQuery.value = input.value;
+  });
+});
+
+function search() {
+  clearTimeout();
+  isLoading.value = true;
+  setTimeout(() => {
+      searchQuery.value = searchInput.value;
+      isLoading.value = false;
+    }, 1000);
+}
 </script>
 
 <style lang="scss" scoped>
-.countries-grid {
+.countries {
+  width: 100%;
+  padding: 0 100px;
+  .countries-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 50px 0 0;
+
+    .search-group {
+      .form-control {
+        padding-left: 2.375rem;
+        background-color: var(--dm-dark-blue);
+        color: var(--lm-white);
+      }
+
+      .form-control-feedback {
+        position: absolute;
+        z-index: 2;
+        display: block;
+        width: 2.375rem;
+        height: 2.375rem;
+        line-height: 2.375rem;
+        text-align: center;
+        pointer-events: none;
+        color: var(--lm-white);
+      }
+    }
+  }
+
+  .countries-grid {
     display: grid;
     margin: 60px auto;
     grid-template-columns: 265px 265px 265px 265px;
     grid-template-rows: 300px auto 300px;
     column-gap: 60px;
     row-gap: 60px;
+  }
 }
 </style>
