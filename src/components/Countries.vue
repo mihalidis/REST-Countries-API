@@ -14,9 +14,10 @@
     <Spinner v-if="isLoading" />
     <div v-else class="countries-grid">
         <CountryCard v-for="country in countries"
-                    class="country"
-                    :key="country.name.common"
-                    :country="country" />
+                            class="country"
+                            :key="country.name.common"
+                            :country="country"
+                            @click="routeToCountryPage(country)" />
     </div>
   </div>
 </template>
@@ -26,6 +27,7 @@ import { ref, watch, computed, inject, onMounted } from 'vue';
 import CountryCard from './CountryCard.vue';
 import SelectRegionDropdown from './SelectRegionDropdown.vue';
 import Spinner from './Spinner.vue';
+import router from '../router/index.js';
 
 const emitter = inject('emitter');
 
@@ -65,6 +67,11 @@ function search() {
       searchQuery.value = searchInput.value;
       isLoading.value = false;
     }, 1000);
+}
+
+function routeToCountryPage(country) {
+  console.log('go to country');
+  router.push({ name : 'Country', params: { countryName: country.name.common } });
 }
 </script>
 
