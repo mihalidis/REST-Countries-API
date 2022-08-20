@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import { ref, watch, computed, inject, onMounted } from 'vue';
+import { ref, computed, inject, onMounted } from 'vue';
 import CountryCard from './CountryCard.vue';
 import SelectRegionDropdown from './SelectRegionDropdown.vue';
 import Spinner from './Spinner.vue';
@@ -70,8 +70,7 @@ function search() {
 }
 
 function routeToCountryPage(country) {
-  console.log('go to country');
-  router.push({ name : 'Country', params: { countryName: country.name.common } });
+  router.push({ name : 'Country', params: { countryName: country.name.common }});
 }
 </script>
 

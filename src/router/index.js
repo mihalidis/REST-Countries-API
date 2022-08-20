@@ -7,16 +7,14 @@ const routes = [
         path: '/',
         name: 'Home',
         components: {
-            default: Home,
-            Home
+            default: () => import('@/components/Home.vue'),
         }
     },
     {
         path: '/country/:countryName',
         name: 'Country',
         components: {
-            default: CountryPage,
-            CountryPage
+            default: () => import('@/components/CountryPage.vue'),
         }
     }
 ];
