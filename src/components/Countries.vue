@@ -14,6 +14,7 @@
     <Spinner v-if="isLoading" />
     <div v-else class="countries-grid">
         <CountryCard v-for="country in countries"
+                    class="country"
                     :key="country.name.common"
                     :country="country" />
     </div>
@@ -98,12 +99,12 @@ function search() {
   }
 
   .countries-grid {
-    display: grid;
-    margin: 60px auto;
-    grid-template-columns: 265px 265px 265px 265px;
-    grid-template-rows: 300px auto 300px;
-    column-gap: 60px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 60px 0 60px;
     row-gap: 60px;
+    column-gap: 60px;
+    justify-content: center;
   }
 }
 </style>
