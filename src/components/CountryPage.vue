@@ -5,7 +5,7 @@
             Back
         </router-link>
         <div class="row country">
-            <img class="col col-lg-6 country-image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARMAAAC3CAMAAAAGjUrGAAAAD1BMVEX///+uHCghRousABYLPIffJaIXAAABB0lEQVR4nO3QuRGAAAzAsPDsPzN9XFJAIU3g8xxs83XAD3lSnpQn5Ul5Up6UJ+VJeVKelCflSXlSnpQn5Ul5Up6UJ+VJeVKelCflSXlSnpQn5Ul5Up6UJ+VJeVKelCflSXlSnpQn5Ul5Up6UJ+VJeVKelCflSXlSnpQn5Ul5Up6UJ+VJeVKe1FxsAwAAAAAAAAAAAAAAAAAAAMB7N9ucbJ6UJ+VJeVKelCflSXlSnpQn5Ul5Up6UJ+VJeVKelCflSXlSnpQn5Ul5Up6UJ+VJeVKelCflSXlSnpQn5Ul5Up6UJ+VJeVKelCflSXlSnpQn5Ul5Up6UJ+VJeVKelCflSXlSnpQn5Uk9Q6/I4nGDdNoAAAAASUVORK5CYII=" alt="holland">
+            <img class="col col-lg-6 country-image" :src="getCountryByName.flagUrl" :alt="selectedCountryName">
             <div class="col col-lg-6 country-information">
                 <h2 class="country-name">{{ selectedCountryName }}</h2>
                 <div class="row information-wrapper">
@@ -75,7 +75,8 @@ const getCountryByName = computed(() => {
         tld: selectedCountry.tld.join(', '),
         currencies: Object.values(selectedCountry.currencies)[0].name,
         languages: Object.values(selectedCountry.languages).join(', '),
-        borders: borders
+        borders: borders,
+        flagUrl: selectedCountry.flags.svg
     };
 
     return country;
