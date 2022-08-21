@@ -11,8 +11,9 @@ const routes = [
         }
     },
     {
-        path: '/country/:countryName',
+        path: '/:countryName',
         name: 'Country',
+        props: true,
         components: {
             default: () => import('@/components/CountryPage.vue'),
         }

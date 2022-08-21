@@ -28,8 +28,10 @@ import CountryCard from './CountryCard.vue';
 import SelectRegionDropdown from './SelectRegionDropdown.vue';
 import Spinner from './Spinner.vue';
 import router from '../router/index.js';
+import { useCountriesStore } from '../stores/countries';
 
 const emitter = inject('emitter');
+const store = useCountriesStore();
 
 const props = defineProps({
   allCountries: {
@@ -69,8 +71,16 @@ function search() {
     }, 1000);
 }
 
-function routeToCountryPage(country) {
+async function routeToCountryPage(country) {
+  await fetchCountry(country.name.common);
+
   router.push({ name : 'Country', params: { countryName: country.name.common }});
+}
+
+async function fetchCountry(selectedCountryName) {
+    emitter.emit('isLoading', ref(true));
+    await store.fetchCountryByName(selectedCountryName);
+    emitter.emit('isLoading', ref(false));
 }
 </script>
 
