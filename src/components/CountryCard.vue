@@ -24,7 +24,13 @@ const props = defineProps({
 <style lang="scss" scoped>
 .card {
   background-color: var(--dm-dark-blue);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 5px;
   width: 265px;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 25px;
+  }
 
   .card-img-top {
     height: 158px;

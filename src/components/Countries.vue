@@ -14,19 +14,24 @@
     <Spinner v-if="isLoading" />
     <div v-else class="countries-grid">
         <CountryCard v-for="country in countries"
-                    :key="country.name.common"
-                    :country="country" />
+                            class="country"
+                            :key="country.name.common"
+                            :country="country"
+                            @click="routeToCountryPage(country)" />
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, watch, computed, inject, onMounted } from 'vue';
+import { ref, computed, inject, onMounted } from 'vue';
 import CountryCard from './CountryCard.vue';
 import SelectRegionDropdown from './SelectRegionDropdown.vue';
 import Spinner from './Spinner.vue';
+import router from '../router/index.js';
+import { useCountriesStore } from '../stores/countries';
 
 const emitter = inject('emitter');
+const store = useCountriesStore();
 
 const props = defineProps({
   allCountries: {
@@ -65,6 +70,18 @@ function search() {
       isLoading.value = false;
     }, 1000);
 }
+
+async function routeToCountryPage(country) {
+  await fetchCountry(country.name.common);
+
+  router.push({ name : 'Country', params: { countryName: country.name.common }});
+}
+
+async function fetchCountry(selectedCountryName) {
+    emitter.emit('isLoading', ref(true));
+    await store.fetchCountryByName(selectedCountryName);
+    emitter.emit('isLoading', ref(false));
+}
 </script>
 
 <style lang="scss" scoped>
@@ -98,12 +115,12 @@ function search() {
   }
 
   .countries-grid {
-    display: grid;
-    margin: 60px auto;
-    grid-template-columns: 265px 265px 265px 265px;
-    grid-template-rows: 300px auto 300px;
-    column-gap: 60px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 60px 0 60px;
     row-gap: 60px;
+    column-gap: 60px;
+    justify-content: center;
   }
 }
 </style>

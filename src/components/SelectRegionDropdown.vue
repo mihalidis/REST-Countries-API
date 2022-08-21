@@ -37,7 +37,7 @@ async function selectRegion(selected) {
     } else {
         selectedRegion.value = selected;
         emitter.emit('isLoading', ref(true));
-        await store.fetchCountiesByRegion(selected);
+        await store.fetchCountriesByRegion(selected);
         emitter.emit('isLoading', ref(false));
     }
 }

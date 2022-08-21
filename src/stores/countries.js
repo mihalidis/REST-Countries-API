@@ -3,7 +3,8 @@ import axios from "axios"
 
 export const useCountriesStore = defineStore("user",{
     state: () => ({
-        countries: []
+        countries: [],
+        selectedCountry: {}
     }),
     getters: {
         getCountries(state) {
@@ -19,10 +20,18 @@ export const useCountriesStore = defineStore("user",{
                 console.error(errors);
               }
         },
-        async fetchCountiesByRegion(region) {
+        async fetchCountriesByRegion(region) {
             try {
                 const response = await axios.get(`https://restcountries.com/v3.1/region/${region}`);
                 this.countries = response.data;
+              } catch (errors) {
+                console.error(errors);
+              }
+        },
+        async fetchCountryByName(countryName) {
+            try {
+                const response = await axios.get(`https://restcountries.com/v3.1/name/${countryName}?fullText=true`);
+                this.selectedCountry = response.data[0];
               } catch (errors) {
                 console.error(errors);
               }
