@@ -4,7 +4,7 @@
             <i class="fa fa-arrow-left" />
             Back
         </router-link>
-        <div class="row country">
+        <div v-if="!isEmpty(getCountryByName)" class="row country">
             <img class="col col-lg-6 country-image" :src="getCountryByName.flagUrl" :alt="selectedCountryName">
             <div class="col col-lg-6 country-information">
                 <h2 class="country-name">{{ selectedCountryName }}</h2>
@@ -32,13 +32,16 @@
                 </span>
             </div>
         </div>
+        <Spinner v-else />
     </div>
 </template>
 
 <script setup>
-import { computed, inject } from 'vue';
+import { computed, inject, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useCountriesStore } from '../stores/countries';
+import { isEmpty } from 'lodash';
+import Spinner from './Spinner.vue';
 
 const store = useCountriesStore();
 const route = useRoute();
@@ -47,6 +50,26 @@ const emitter = inject('emitter');
 const selectedCountryName = computed(() => {
     return route.params.countryName;
 });
+
+onMounted(async () => {
+    await checkIfCountriesExist(selectedCountryName);
+});
+
+async function checkIfCountriesExist(selectedCountryName) {
+    if (isEmpty(JSON.parse(JSON.stringify(store.selectedCountry)))) {
+        await fetchCountry(selectedCountryName.value);
+    }
+
+    if (!(JSON.parse(JSON.stringify(store.countries)).length > 0)) {
+        await store.fetchAllCountries();
+    }
+};
+
+async function fetchCountry(selectedCountryName) {
+    emitter.emit('isLoading', ref(true));
+    await store.fetchCountryByName(selectedCountryName);
+    emitter.emit('isLoading', ref(false));
+};
 
 const getCountryByName = computed(() => {
     const selectedCountry = JSON.parse(
@@ -57,29 +80,33 @@ const getCountryByName = computed(() => {
       JSON.stringify(store.countries)
     );
 
-    const borders = [];
-    if (selectedCountry.borders) {
-        selectedCountry.borders.forEach(border => {
-            const borderCountry = countries.find(country => Object.values(country).includes(border));
+    if (!isEmpty(selectedCountry) && countries.length > 0) {
+        const borders = [];
+        if (selectedCountry.borders) {
+            selectedCountry.borders.forEach(border => {
+                const borderCountry = countries.find(country => Object.values(country).includes(border));
 
-            borders.push(borderCountry.name.common)
-        });
+                borders.push(borderCountry.name.common)
+            });
+        }
+
+        const country = {
+            nativeName: Object.values(selectedCountry.name.nativeName)[0].official,
+            population: selectedCountry.population.toLocaleString(),
+            region: selectedCountry.region,
+            subRegion: selectedCountry.subRegion,
+            capital: selectedCountry.capital.join(', '),
+            tld: selectedCountry.tld.join(', '),
+            currencies: Object.values(selectedCountry.currencies)[0].name,
+            languages: Object.values(selectedCountry.languages).join(', '),
+            borders: borders,
+            flagUrl: selectedCountry.flags.svg
+        };
+
+        return country;
     }
 
-    const country = {
-        nativeName: Object.values(selectedCountry.name.nativeName)[0].official,
-        population: selectedCountry.population.toLocaleString(),
-        region: selectedCountry.region,
-        subRegion: selectedCountry.subRegion,
-        capital: selectedCountry.capital.join(', '),
-        tld: selectedCountry.tld.join(', '),
-        currencies: Object.values(selectedCountry.currencies)[0].name,
-        languages: Object.values(selectedCountry.languages).join(', '),
-        borders: borders,
-        flagUrl: selectedCountry.flags.svg
-    };
-
-    return country;
+    return {};;
 });
 </script>
 
