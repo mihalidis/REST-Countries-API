@@ -134,8 +134,8 @@ async function goToSelectedCountry(countryName) {
         margin-bottom: 60px;
         align-items: center;
         justify-content: space-around;
-        background-color: var(--dm-dark-blue);
-        color: var(--lm-white);
+        background-color: var(--color-background-secondary);
+        color: var(--color-text);
         font-size: 15px;
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 8px;
 
@@ -159,18 +159,21 @@ async function goToSelectedCountry(countryName) {
             }
 
             .border-countries-section {
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
                 .border-country-banner {
                     cursor: pointer;
                     font-size: 12px;
-                    margin: 0 8px;
+                    margin: 8px 8px 0;
                     padding: 6px 16px;
-                    background-color: var(--dm-dark-blue);
-                    color: var(--lm-white);
+                    background-color: var(--color-background-secondary);
+                    color: var(--color-text);
                     border-radius: 3px;
                     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 5px;
 
                     &:hover {
-                        box-shadow: rgba(255, 255, 255, 0.438) 0px 5px 15px;
+                        box-shadow: rgba(141, 133, 133, 0.438) 0px 5px 5px;
                     }
                 }
             }

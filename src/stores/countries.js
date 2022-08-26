@@ -1,5 +1,6 @@
-import { defineStore } from 'pinia'
-import axios from "axios"
+import { defineStore } from 'pinia';
+import axios from "axios";
+import { sortBy } from 'lodash';
 
 export const useCountriesStore = defineStore("user",{
     state: () => ({
@@ -15,7 +16,7 @@ export const useCountriesStore = defineStore("user",{
         async fetchAllCountries() {
             try {
                 const response = await axios.get(`https://restcountries.com/v3.1/all`);
-                this.countries = response.data;
+                this.countries = sortBy(response.data,(country) => country.name.common.toLowerCase());;
               } catch (errors) {
                 console.error(errors);
               }
@@ -23,7 +24,7 @@ export const useCountriesStore = defineStore("user",{
         async fetchCountriesByRegion(region) {
             try {
                 const response = await axios.get(`https://restcountries.com/v3.1/region/${region}`);
-                this.countries = response.data;
+                this.countries = sortBy(response.data,(country) => country.name.common.toLowerCase());
               } catch (errors) {
                 console.error(errors);
               }

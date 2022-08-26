@@ -2,23 +2,44 @@
 :root {
   --dm-dark-blue: hsl(209, 23%, 22%);
   --dm-very-dark-blue: hsl(207, 26%, 17%);
-
+  --light-gray: #ced4da;
   --lm-very-dark-blue: hsl(200, 15%, 8%);
   --lm-dark-gray: hsl(0, 0%, 52%);
   --lm-very-light-gray: hsl(0, 0%, 98%);
   --lm-white: hsl(0, 0%, 100%);
+  --element-size: 4rem;
 }
 /* color variables for this project */
+
 :root {
+  --color-background: var(--lm-white);
+  --color-background-secondary: var(--lm-very-light-gray);
+  --color-heading: var(--dm-very-dark-blue);
+  --color-text: var(--dm-very-dark-blue);
+  --color-text-anti: var(--lm-white);
+  --color-border: var(--light-gray);
+  --accent-color: #cacaca;
+}
+
+:root.dark-theme {
   --color-background: var(--dm-very-dark-blue);
+  --color-background-secondary: var(--dm-dark-blue);
+  --color-heading: var(--lm-white);
+  --color-text: var(--lm-white);
+  --color-text-anti: var(--dm-very-dark-blue);
+  --color-border: var(--light-gray);
+  --accent-color: #3f3f3f;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root.dark-theme {
     --color-background: var(--dm-very-dark-blue);
-
+    --color-background-secondary: var(--dm-dark-blue);
     --color-heading: var(--lm-white);
     --color-text: var(--lm-white);
+    --color-text-anti: var(--dm-very-dark-blue);
+    --color-border: var(--light-gray);
+    --accent-color: #3f3f3f;
   }
 }
 

@@ -96,8 +96,8 @@ async function fetchCountry(selectedCountryName) {
     .search-group {
       .form-control {
         padding-left: 2.375rem;
-        background-color: var(--dm-dark-blue);
-        color: var(--lm-white);
+        background-color: var(--color-background-secondary);
+        color: var(--color-text);
       }
 
       .form-control-feedback {
@@ -109,7 +109,7 @@ async function fetchCountry(selectedCountryName) {
         line-height: 2.375rem;
         text-align: center;
         pointer-events: none;
-        color: var(--lm-white);
+        color: var(--color-text);
       }
     }
   }

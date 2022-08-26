@@ -47,14 +47,19 @@ async function selectRegion(selected) {
 .dropdown {
     #dropdownMenuButton,
     .dropdown-menu {
-        background-color: var(--dm-dark-blue);
+        background-color: var(--color-background-secondary);
         .dropdown-item {
-            color: white;
+            color: var(--color-text);
 
             &:hover {
-                color: black;
+                color: var(--color-text);
             }
         }
+    }
+
+    .dropdown-toggle {
+        color: var(--color-text);
+        border-color: var(--color-border);
     }
 }
 </style>
