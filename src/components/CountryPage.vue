@@ -26,13 +26,14 @@
                     <span>Border Countries:</span>
                     <span   v-for="border in getCountryByName.borders"
                             :key="border"
-                            class="border-country-banner">
+                            class="border-country-banner"
+                            @click="goToSelectedCountry(border)">
                         {{ border }}        
                     </span>
                 </span>
             </div>
         </div>
-        <Spinner v-else />
+        <Spinner v-else-if="isLoading || isEmpty(getCountryByName)" />
     </div>
 </template>
 
@@ -47,29 +48,16 @@ const store = useCountriesStore();
 const route = useRoute();
 const emitter = inject('emitter');
 
+const isLoading = ref(false);
+const selectedBorderCountryName = ref('');
+
 const selectedCountryName = computed(() => {
+    if(selectedBorderCountryName.value !== '') {
+        return selectedBorderCountryName.value;
+    }
+
     return route.params.countryName;
 });
-
-onMounted(async () => {
-    await checkIfCountriesExist(selectedCountryName);
-});
-
-async function checkIfCountriesExist(selectedCountryName) {
-    if (isEmpty(JSON.parse(JSON.stringify(store.selectedCountry)))) {
-        await fetchCountry(selectedCountryName.value);
-    }
-
-    if (!(JSON.parse(JSON.stringify(store.countries)).length > 0)) {
-        await store.fetchAllCountries();
-    }
-};
-
-async function fetchCountry(selectedCountryName) {
-    emitter.emit('isLoading', ref(true));
-    await store.fetchCountryByName(selectedCountryName);
-    emitter.emit('isLoading', ref(false));
-};
 
 const getCountryByName = computed(() => {
     const selectedCountry = JSON.parse(
@@ -108,6 +96,32 @@ const getCountryByName = computed(() => {
 
     return {};;
 });
+
+onMounted(async () => {
+    await checkIfCountriesExist(selectedCountryName);
+});
+
+// Methods
+async function checkIfCountriesExist(selectedCountryName) {
+    if (isEmpty(JSON.parse(JSON.stringify(store.selectedCountry)))) {
+        await fetchCountry(selectedCountryName.value);
+    }
+
+    if (!(JSON.parse(JSON.stringify(store.countries)).length > 0)) {
+        await store.fetchAllCountries();
+    }
+};
+
+async function fetchCountry(selectedCountryName) {
+    isLoading.value = true;
+    await store.fetchCountryByName(selectedCountryName);
+    isLoading.value = false;
+};
+
+async function goToSelectedCountry(countryName) {
+    selectedBorderCountryName.value = countryName;
+    await fetchCountry(countryName);
+}
 </script>
 
 <style lang="scss" scoped>
@@ -156,7 +170,7 @@ const getCountryByName = computed(() => {
                     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 5px;
 
                     &:hover {
-                        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+                        box-shadow: rgba(255, 255, 255, 0.438) 0px 5px 15px;
                     }
                 }
             }
