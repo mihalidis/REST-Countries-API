@@ -52,6 +52,7 @@ async function selectRegion(selected) {
             color: var(--color-text);
 
             &:hover {
+                background-color: var(--color-background);
                 color: var(--color-text);
             }
         }
