@@ -43,6 +43,7 @@ import { useRoute } from 'vue-router';
 import { useCountriesStore } from '../stores/countries';
 import { isEmpty } from 'lodash';
 import Spinner from './Spinner.vue';
+import router from "../router";
 
 const store = useCountriesStore();
 const route = useRoute();
@@ -119,8 +120,10 @@ async function fetchCountry(selectedCountryName) {
 };
 
 async function goToSelectedCountry(countryName) {
-    selectedBorderCountryName.value = countryName;
-    await fetchCountry(countryName);
+  await fetchCountry(countryName);
+  selectedBorderCountryName.value = countryName;
+
+  router.push({ name : 'Country', params: { countryName: countryName }});
 }
 </script>
 
