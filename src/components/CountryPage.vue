@@ -145,39 +145,51 @@ async function goToSelectedCountry(countryName) {
     }
 
     .country {
-        .country-information {
+      .country-name {
+        @media (max-width: 991px) {
+          margin: 16px 0;
+        }
+      }
+      .country-information {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+
+        @media (max-width: 991px) {
+          margin: 16px 0;
+        }
+
+        .information-wrapper {
+          @media (max-width: 991px) {
+            margin: 16px 0;
+          }
+          .information {
             display: flex;
             flex-direction: column;
-            justify-content: space-around;
-
-            .information-wrapper {
-                .information {
-                    display: flex;
-                    flex-direction: column;
-                    row-gap: 6px;
-                }
-            }
-
-            .border-countries-section {
-                display: flex;
-                align-items: center;
-                flex-wrap: wrap;
-                .border-country-banner {
-                    cursor: pointer;
-                    font-size: 12px;
-                    margin: 8px 8px 0;
-                    padding: 6px 16px;
-                    background-color: var(--color-background-secondary);
-                    color: var(--color-text);
-                    border-radius: 3px;
-                    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 5px;
-
-                    &:hover {
-                        box-shadow: rgba(141, 133, 133, 0.438) 0px 5px 5px;
-                    }
-                }
-            }
+            row-gap: 6px;
+          }
         }
+
+        .border-countries-section {
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+          .border-country-banner {
+            cursor: pointer;
+            font-size: 12px;
+            margin: 8px 8px 0;
+            padding: 6px 16px;
+            background-color: var(--color-background-secondary);
+            color: var(--color-text);
+            border-radius: 3px;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 5px;
+
+            &:hover {
+              box-shadow: rgba(141, 133, 133, 0.438) 0px 5px 5px;
+            }
+          }
+        }
+      }
     }
 }
 </style>

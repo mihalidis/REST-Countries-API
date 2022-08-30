@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { onMounted, computed, inject, ref } from 'vue';
+import { onMounted, computed } from 'vue';
 import { useCountriesStore } from '../stores/countries';
 
 // Components

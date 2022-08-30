@@ -88,12 +88,25 @@ async function fetchCountry(selectedCountryName) {
 .countries {
   width: 100%;
   padding: 0 100px;
+
+  @media (max-width: 650px) {
+    padding: 0 25px;
+  }
+
   .countries-header {
     display: flex;
     justify-content: space-between;
     padding: 50px 0 0;
 
+    @media (max-width: 650px) {
+      flex-direction: column;
+    }
+
     .search-group {
+      @media (max-width: 650px) {
+        margin-bottom: 32px;
+      }
+
       .form-control {
         padding-left: 2.375rem;
         background-color: var(--color-background-secondary);
@@ -121,6 +134,12 @@ async function fetchCountry(selectedCountryName) {
     row-gap: 60px;
     column-gap: 60px;
     justify-content: center;
+
+    @media (max-width: 650px) {
+      margin: 30px 0 30px;
+      row-gap: 30px;
+      column-gap: 30px;
+    }
   }
 }
 </style>
