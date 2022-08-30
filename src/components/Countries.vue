@@ -133,7 +133,7 @@ async function fetchCountry(selectedCountryName) {
     margin: 60px 0 60px;
     row-gap: 60px;
     column-gap: 60px;
-    justify-content: center;
+    justify-content: space-between;
 
     @media (max-width: 650px) {
       margin: 30px 0 30px;
