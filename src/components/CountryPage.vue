@@ -50,13 +50,8 @@ const route = useRoute();
 const emitter = inject('emitter');
 
 const isLoading = ref(false);
-const selectedBorderCountryName = ref('');
 
 const selectedCountryName = computed(() => {
-    if(selectedBorderCountryName.value !== '') {
-        return selectedBorderCountryName.value;
-    }
-
     return route.params.countryName;
 });
 
@@ -121,7 +116,6 @@ async function fetchCountry(selectedCountryName) {
 
 async function goToSelectedCountry(countryName) {
   await fetchCountry(countryName);
-  selectedBorderCountryName.value = countryName;
 
   router.push({ name : 'Country', params: { countryName: countryName }});
 }
